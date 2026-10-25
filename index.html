@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>행렬을 이용한 이미지 압축</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>행렬을 이용한 이미지 압축</h1>
+    <p>수학의 행렬과 변환을 활용한 이미지 데이터 압축 탐구</p>
+</header>
+
+
+<main>
+
+    <!-- 이미지 업로드 -->
+    <section class="card">
+        <h2>1. 이미지 선택</h2>
+
+        <p>
+            이미지를 업로드하면 픽셀의 RGB 값을 행렬로 표현하고
+            해상도 축소와 DCT 기반 압축을 비교할 수 있습니다.
+        </p>
+
+        <input type="file" id="imageInput" accept="image/*">
+
+        <div id="imageInfo"></div>
+    </section>
+
+
+    <!-- 원본 이미지 -->
+    <section class="card">
+        <h2>2. 원본 이미지</h2>
+
+        <div class="canvas-container">
+            <canvas id="originalCanvas"></canvas>
+        </div>
+    </section>
+
+
+    <!-- 해상도 축소 -->
+    <section class="card">
+
+        <h2>3. 해상도 축소 실험</h2>
+
+        <p>
+            이미지의 가로·세로 크기를 줄인 뒤 다시 원래 크기로 확대하여
+            원본과의 차이를 MSE로 계산합니다.
+        </p>
+
+        <div class="control">
+            <label for="resolutionSlider">
+                해상도 비율:
+                <strong id="resolutionValue">100%</strong>
+            </label>
+
+            <input
+                type="range"
+                id="resolutionSlider"
+                min="10"
+                max="100"
+                step="5"
+                value="100"
+            >
+
+            <button id="resolutionButton">
+                해상도 실험 실행
+            </button>
+        </div>
+
+        <div class="result-grid">
+
+            <div>
+                <h3>변환된 이미지</h3>
+                <canvas id="resolutionCanvas"></canvas>
+            </div>
+
+            <div class="result-box">
+                <h3>MSE</h3>
+                <p id="resolutionMSE">-</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DCT 압축 -->
+    <section class="card">
+
+        <h2>4. DCT를 이용한 이미지 압축</h2>
+
+        <p>
+            이미지를 8×8 픽셀 블록으로 나누고 각각을 DCT
+            (Discrete Cosine Transform)로 변환합니다.
+            이후 일부 주파수 성분만 남겨 이미지를 복원합니다.
+        </p>
+
+        <div class="control">
+
+            <label for="dctSlider">
+                DCT 계수 보존율:
+                <strong id="dctValue">100%</strong>
+            </label>
+
+            <input
+                type="range"
+                id="dctSlider"
+                min="0"
+                max="100"
+                step="5"
+                value="100"
+            >
+
+            <button id="dctButton">
+                DCT 실험 실행
+            </button>
+
+        </div>
+
+
+        <div class="result-grid">
+
+            <div>
+                <h3>DCT 복원 이미지</h3>
+                <canvas id="dctCanvas"></canvas>
+            </div>
+
+            <div class="result-box">
+
+                <h3>MSE</h3>
+
+                <p id="dctMSE">-</p>
+
+                <h3>보존한 계수</h3>
+
+                <p id="coefficientInfo">-</p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DCT 행렬 -->
+    <section class="card">
+
+        <h2>5. DCT 변환 결과</h2>
+
+        <p>
+            이미지의 첫 번째 8×8 블록에 DCT를 적용한 결과입니다.
+            왼쪽 위의 값은 전체적인 밝기 정보를 나타내는 DC 성분이며,
+            나머지는 세부적인 변화와 관련된 AC 성분입니다.
+        </p>
+
+        <div id="matrixContainer">
+            <p>이미지를 업로드하고 DCT 실험을 실행하세요.</p>
+        </div>
+
+    </section>
+
+
+    <!-- 수학적 원리 -->
+    <section class="card">
+
+        <h2>6. 수학적 원리</h2>
+
+        <h3>① 디지털 이미지와 행렬</h3>
+
+        <p>
+            디지털 이미지는 픽셀의 집합으로 표현할 수 있습니다.
+            각 픽셀은 RGB와 같은 수치 정보를 가지고 있으므로
+            이미지를 수학적으로 행렬로 나타낼 수 있습니다.
+        </p>
+
+
+        <h3>② DCT</h3>
+
+        <p>
+            DCT는 공간 영역의 픽셀 정보를 주파수 성분으로 변환합니다.
+            이미지에서 상대적으로 중요한 저주파 성분은 남기고
+            변화가 적은 고주파 성분을 줄이면 데이터의 양을 감소시킬 수 있습니다.
+        </p>
+
+
+        <div class="formula">
+            DCT:
+            <br><br>
+            F(u,v) =
+            1/4 C(u)C(v)
+            ΣΣ f(x,y)
+            cos[(2x+1)uπ/16]
+            cos[(2y+1)vπ/16]
+        </div>
+
+
+        <h3>③ MSE</h3>
+
+        <p>
+            압축 전 이미지와 복원된 이미지의 차이를 정량적으로 비교하기 위해
+            평균제곱오차(MSE)를 사용합니다.
+        </p>
+
+        <div class="formula">
+            MSE =
+            1/N Σ(xᵢ - yᵢ)²
+        </div>
+
+        <p>
+            MSE가 작을수록 원본과 복원 이미지의 차이가 작다는 의미입니다.
+        </p>
+
+    </section>
+
+
+    <!-- 실제 활용 -->
+    <section class="card">
+
+        <h2>7. 실제 IT 기술과의 연결</h2>
+
+        <p>
+            실제 JPEG 이미지 압축에서도 DCT와 양자화 등의 수학적 방법이
+            사용됩니다. 스마트폰 사진, 웹사이트 이미지, SNS 이미지 등에서
+            이미지 데이터를 효율적으로 저장하고 전송하기 위해
+            이러한 압축 기술이 활용됩니다.
+        </p>
+
+        <p class="notice">
+            ※ 이 사이트의 실험은 JPEG의 전체 압축 과정을 그대로 구현한 것이 아니라,
+            JPEG의 핵심 수학적 아이디어 중 하나인 8×8 DCT를 단순화하여 구현한 모델입니다.
+        </p>
+
+    </section>
+
+</main>
+
+
+<footer>
+    <p>수학 × IT 융합 탐구 | 행렬을 이용한 이미지 압축</p>
+</footer>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
