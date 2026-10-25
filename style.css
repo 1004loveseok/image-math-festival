@@ -1,0 +1,201 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, "Noto Sans KR", sans-serif;
+    background: #f4f6f8;
+    color: #222;
+    line-height: 1.7;
+}
+
+header {
+    background: #1f2937;
+    color: white;
+    text-align: center;
+    padding: 45px 20px;
+}
+
+header h1 {
+    margin: 0 0 10px;
+    font-size: 32px;
+}
+
+header p {
+    margin: 0;
+    font-size: 16px;
+    opacity: 0.9;
+}
+
+main {
+    width: min(1100px, 92%);
+    margin: 30px auto 60px;
+}
+
+.card {
+    background: white;
+    border-radius: 14px;
+    padding: 28px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #e5e7eb;
+}
+
+.card h3 {
+    margin-top: 25px;
+}
+
+input[type="file"] {
+    margin-top: 15px;
+    padding: 10px;
+    width: 100%;
+    max-width: 500px;
+}
+
+#imageInfo {
+    margin-top: 12px;
+    color: #555;
+    font-size: 14px;
+}
+
+.canvas-container {
+    width: 100%;
+    overflow-x: auto;
+    text-align: center;
+}
+
+canvas {
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: 15px auto;
+    border: 1px solid #d1d5db;
+    background: #eee;
+}
+
+.control {
+    margin-top: 20px;
+    padding: 20px;
+    background: #f8fafc;
+    border-radius: 10px;
+}
+
+.control label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 17px;
+}
+
+input[type="range"] {
+    width: 100%;
+    max-width: 700px;
+    display: block;
+    margin: 15px 0;
+}
+
+button {
+    border: none;
+    background: #2563eb;
+    color: white;
+    padding: 11px 20px;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #1d4ed8;
+}
+
+.result-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 25px;
+    margin-top: 25px;
+}
+
+.result-box {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 20px;
+    align-self: start;
+}
+
+.result-box h3 {
+    margin-top: 0;
+}
+
+.result-box p {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#matrixContainer {
+    overflow-x: auto;
+    margin-top: 20px;
+}
+
+.matrix {
+    border-collapse: collapse;
+    margin: 0 auto;
+    font-size: 12px;
+}
+
+.matrix td {
+    border: 1px solid #ccc;
+    padding: 7px;
+    min-width: 65px;
+    text-align: center;
+    background: #fafafa;
+}
+
+.formula {
+    background: #f3f4f6;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    font-family: "Times New Roman", serif;
+    font-size: 20px;
+    overflow-x: auto;
+}
+
+.notice {
+    background: #fff7ed;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #f97316;
+}
+
+footer {
+    text-align: center;
+    padding: 30px;
+    background: #1f2937;
+    color: white;
+}
+
+@media (max-width: 700px) {
+
+    header h1 {
+        font-size: 25px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    .result-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .matrix td {
+        min-width: 50px;
+        padding: 5px;
+        font-size: 10px;
+    }
+}
